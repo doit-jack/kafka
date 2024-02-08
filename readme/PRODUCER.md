@@ -1,6 +1,6 @@
 # Producer
 
-![producer-structure.png](assets/producer-structure.png)
+![producer-structure.png](../assets/producer-structure.png)
 
 Producer API 사용 시,
 UnifromStickyPartitioner(Default) 와 RoundRobinPartitioner 2가지 파티셔너를 제공
@@ -58,9 +58,24 @@ ISR(In-Sync-Replicas)의 상태와 관련이 있음
 2이면 leader, partition 1개만 확인하고 OK. 1이면 leader만 확인
 
 
+# 멱등성 Producer
 
+![idempotence.png](..%2Fassets%2Fidempotence.png)
 
+- 데이터 중복 적재를 위해 프로듀서에서 enable.idempotence 옵션을 사용하여 정확히 한 번 전달을 지원
+- DEFAULT는 false임, 3.0부터는 true(acks = all).
+- acks가 all이 되어 처리속도가 느려지기 때문에 유의해서 사용해야 함
 
+![idempotence-work.png](..%2Fassets%2Fidempotence-work.png)
 
+- 멱등성 프로듀서는 동일한 세션에서만 정확히 한 번 전달을 보장
+- 여기서 말하는 동일한 세션이란 PID의 생명주기를 의미
+- 만약 멱등성 프로듀서로 동작하는 프로듀서 애플리케이션에 이슈가 발생하여 종료되고 다른 애플리케이션으로 재시작하면 PID가 달라진다.
+- retries의 기본값이 Integer.MAX_VALUE로 설정되고 acks옵션은 all로 설정됨
+- PID, SID를 읽는 작업 등 추가적인 리소스가 들어가긴 하지만 3.0부터 이를 처리하기 위한 로직이 개선되어 default가 됨
 
+![itempotence-processing.png](..%2Fassets%2Fitempotence-processing.png)
 
+- 위의 경우는 거의 발생하지 않음.
+
+-> 멱등성 프로듀서로 할 필요 없이, 애플리케이션에서 이에 대한 핸들링을 해도 됨!

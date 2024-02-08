@@ -113,7 +113,7 @@ bin/kafka-consumer-groups.sh --bootstrap-server my-kafka:9092 --group hello-grou
 
 ```
 
-![kafka-consumer-group.png](assets/kafka-consumer-group.png)
+![kafka-consumer-group.png](../assets/kafka-consumer-group.png)
 
 그 외 명령어
 
