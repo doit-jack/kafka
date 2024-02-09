@@ -22,6 +22,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.apache.kafka:kafka-clients")
+    implementation("org.apache.kafka:kafka-streams")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

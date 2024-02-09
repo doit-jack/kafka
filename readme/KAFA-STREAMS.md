@@ -27,3 +27,28 @@
 - 코파티셔닝 되지 않은 KStream과 KTable 을 조인해서 사용하고 싶으면 KTable을 GlobalKTable로 선언하여 사용할 수 있음
 - 글로벌 테일은 토픽의 전체 파티션의 모든 데이터를 MaterializedView로 각 태스크에서 사용할 수 있음
 - 전체 데이터를 각각의 태스크가 가져가서 사용하기 때문에 데이터가 굉장히 클 경우 부담이 됨, GlobalKTable 의 양이 적을 때 활용할 수 있음
+
+
+## 필수 옵션
+- bootstrap.servers
+- application.id
+
+## 선택 옵션
+- default.key.serde: 기본값 바이트 직렬화
+- default.value.serde: 기본값 바이트 직렬화
+- num.stream.threads: 실행될 스레드 개수, default 1.
+- state.dir : 상태기반 데이터 처리를 할 때 데이터를 저장할 디렉토리 지정. default: /tmp/kafka-streams
+
+
+# Streams DSL 윈도우 프로세싱
+- window로 데이터 처리가 가능하다
+- tumbling window : 서로 겹치지 않는 윈도우를 특정 간격으로 지속적으로 추출
+- 호핑 윈도우: 큰 단위로 윈도우가 겹칠 수 있음
+- sliding window: 정확한 시간을 바탕으로 윈도우 사이즈에 포함, topic에 저장된 시간을 기준으로
+- 세션 윈도우: 동일 메시지 키의 데이터를 한 세션에 묶어 연산, 세션의 최대 만료시간에 따라 왼도우 사이즈가 달라짐. 윈도우 사이즈가 가변적이다.
+
+- 윈도우 크기뿐 아니라, 커밋마다 중간 출력이 나옴. 
+![KAFKA-STREAMS_CAUTION.png](KAFKA-STREAMS_CAUTION.png)
+
+![Queryable-store.png](Queryable-store.png)
+
